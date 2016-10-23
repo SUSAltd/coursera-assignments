@@ -12,10 +12,18 @@ function LunchCheckController($scope) {
     Displays message in the little message place
   */
   $scope.displayMessage = function() {
-    if (isTooMuchFood(getFoods()))
-      $scope.message = 'Too much!';
-    else
-      $scope.message = 'Enjoy!';
+    var foods = getFoods();
+    console.log(foods);
+    if (foods.length == 0) {
+      $scope.message = 'Please enter data first';
+      $scope.messageClass = 'error';
+    } else {
+      $scope.messageClass = 'no-error';
+      if (isTooMuchFood(foods))
+        $scope.message = 'Too much!';
+      else
+        $scope.message = 'Enjoy!';
+    }
   };
 
   /*
@@ -24,6 +32,7 @@ function LunchCheckController($scope) {
   function getFoods() {
     var result = $scope.textbox.split(/ *,[ *,*]*/); // ignores "empty" list items
 
+    // takes care of case where the list starts and/or ends with ','
     if (result[0] == '')
       result = result.slice(1);
     if (result[result.length - 1] == '')

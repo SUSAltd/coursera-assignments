@@ -7,7 +7,19 @@
     <script src="angular.min.js"></script>
     <script src="app.js"></script>
     <style>
-      .message { font-size: 1.3em; font-weight: bold; }
+      .message {
+        font-size: 1.3em;
+        font-weight: bold;
+        padding: 1em;
+      }
+      .no-error {
+        border: 1px #0F0 solid;
+        color: #0F0;
+      }
+      .error {
+        border: 1px #F00 solid;
+        color: #F00;
+      }
     </style>
   </head>
 <body>
@@ -24,7 +36,7 @@
     <div class="form-group">
       <button class="btn btn-default" ng-click="displayMessage()">Check If Too Much</button>
     </div>
-  <div class="form-group message">
+  <div class="form-group message {{messageClass}}">
     <!-- Your message can go here. -->
     {{message}}
   </div>
