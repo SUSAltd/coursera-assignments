@@ -1,0 +1,5 @@
+<ul>
+  <li ng-repeat="item in fiCtrl.items">
+    {{item.name}} <button ng-click="fiCtrl.onRemove({index:'$index'})">Don't want this one!</button>
+  </li>
+</ul>
