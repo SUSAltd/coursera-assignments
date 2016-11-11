@@ -1,5 +1,21 @@
-<ul>
-  <li ng-repeat="item in fiCtrl.items">
-    {{item.name}} <button ng-click="fiCtrl.onRemove({index:'$index'})">Don't want this one!</button>
-  </li>
-</ul>
+<div class="found-items-wrapper">
+
+  <div ng-if="fiCtrl.listIsEmpty">
+    Nothing found
+  </div>
+  <ul class="found-items-list">
+    <li ng-repeat="item in fiCtrl.items">
+      <div class="menu-item-name">
+        {{item.name}}
+        <span class="menu-item-short-name">
+          ({{item.short_name}})
+          <button ng-click="fiCtrl.onRemove({index:'$index'})">Don't want this one!</button>
+        </span>
+      </div>
+      <p>
+        {{item.description}}
+      </p>
+    </li>
+  </ul>
+
+</div>

@@ -19,6 +19,7 @@ function FoundItemsDirective() {
     controllerAs: 'fiCtrl',
     scope: {
       items: '<',
+      listIsEmpty: '<',
       onRemove: '&',
     },
     templateUrl: 'founditems.template.html',
@@ -31,12 +32,23 @@ NarrowItDownController.$inject = ['MenuSearchService'];
 function NarrowItDownController(MenuSearchService) {
   var narrowCtrl = this;
   narrowCtrl.found; // list of found items
+  narrowCtrl.listIsEmpty = false; // initialize to false so message does not appear
 
   narrowCtrl.getMenuItems = function(searchTerm) {
-    var promise = MenuSearchService.getMatchedMenuItems(searchTerm);
-    promise.then(function(response) {
-      narrowCtrl.found = response;
-    });
+    if (searchTerm) {
+      var promise = MenuSearchService.getMatchedMenuItems(searchTerm);
+      promise.then(function(response) {
+        if (response.length) {
+          narrowCtrl.listIsEmpty = false;
+        } else {
+          narrowCtrl.listIsEmpty = true;
+        }
+        narrowCtrl.found = response;
+      });
+    } else {
+      narrowCtrl.found = [];
+      narrowCtrl.listIsEmpty = true;
+    }
   };
 
   narrowCtrl.removeItem = function(index) {
