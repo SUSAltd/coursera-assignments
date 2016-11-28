@@ -1,0 +1,21 @@
+<div class="container">
+  <h2>My Info</h2>
+  <div ng-if="miCtrl.userInfo">
+    <h3>{{ miCtrl.userInfo.fname }} {{ miCtrl.userInfo.lname }}</h3>
+    <dl>
+      <dt>Email</dt>
+      <dd><a ng-href="mailto:{{ miCtrl.userInfo.email }}">{{ miCtrl.userInfo.email }}</a></dd>
+      <div ng-if="miCtrl.userInfo.phone">
+        <dt>Phone number</dt>
+        <dd><a ng-href="tel:{{ miCtrl.userInfo.phone }}">{{ miCtrl.userInfo.phone }}</a></dd>
+      </div>
+    </dl>
+    <h3>Favorite dish</h3>
+    <h4>{{ miCtrl.menuItem.name }} ({{ miCtrl.menuItem.short_name }})</h4>
+    <p>{{ miCtrl.menuItem.description }}</p>
+    <img ng-src="{{ miCtrl.menuItemImg }}" alt="{{ miCtrl.menuItem.name }}">
+  </div>
+  <div ng-if="!miCtrl.userInfo">
+    <p>Not Signed Up Yet. <a ui-sref="public.signup">Sign up Now!</a></p>
+  </div>
+</div>

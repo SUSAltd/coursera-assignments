@@ -1,0 +1,104 @@
+<div class="container">
+  <div class="title">
+    <h2>Sign up for our newsletter</h2>
+    <div class="subtitle">
+      We will definitely keep in touch with you and you will definitely receive updates and promotions.
+    </div>
+  </div>
+  <fieldset>
+
+    <form class="signup-form" name="signupForm" novalidate>
+      <label>
+        <input type="text" name="fname" placeholder="First name"
+          ng-model="signupCtrl.user.fname"
+          required
+          maxlength="50"
+        />
+        First name
+        <span class="form-error"
+          ng-if="signupForm.fname.$error.maxlength
+          && signupForm.fname.$touched">
+          is too long
+        </span>
+        <span class="form-error"
+          ng-if="signupForm.fname.$error.required
+          && signupForm.fname.$touched">
+          is required
+        </span>
+      </label><br />
+      <label>
+        <input type="text" name="lname" placeholder="Last name"
+          ng-model="signupCtrl.user.lname"
+          required
+          maxlength="50"
+        />
+        Last name
+        <span class="form-error"
+          ng-if="signupForm.lname.$error.maxlength
+          && signupForm.lname.$touched">
+          is too long
+        </span>
+        <span class="form-error"
+          ng-if="signupForm.lname.$error.required
+          && signupForm.lname.$touched">
+          is required
+        </span>
+      </label><br />
+      <label>
+        <input type="email" name="email" placeholder="Email address"
+          ng-model="signupCtrl.user.email"
+          required
+        />
+        Email address
+        <span class="form-error"
+          ng-if="signupForm.email.$invalid
+          && !signupForm.email.$error.required
+          && signupForm.email.$touched">
+          must be a valid email address
+        </span>
+        <span class="form-error"
+          ng-if="signupForm.email.$error.required
+          && signupForm.email.$touched">
+          is required
+        </span>
+      </label><br />
+      <label>
+        <input type="tel" name="phone" placeholder="Phone number"
+          ng-model="signupCtrl.user.phone"
+          pattern="\(?\d{3}\)?\s?-?\s?\d{3}\s?-?\s?\d{4}"
+        />
+        Phone number
+        <span class="form-error"
+          ng-if="signupForm.phone.$invalid
+          && !signupForm.phone.$error.required
+          && signupForm.phone.$touched">
+          must be a valid phone number (###-###-####)
+        </span>
+      </label><br />
+      <label>
+        <input type="text" name="dish" placeholder="Favorite dish"
+          ng-model="signupCtrl.user.dish"
+          required
+        />
+        Favorite dish (menu number)
+        <span class="form-error"
+          ng-if="signupForm.dish.$error.required
+          && signupForm.dish.$touched">
+          is required
+        </span>
+      </label><br />
+      <label>
+        <input type="submit" name="submit" value="Submit"
+          ng-disabled="signupForm.$invalid"
+          ng-click="signupCtrl.submitForm()"
+        />
+      </label>
+      <div ng-if="!signupCtrl.menuItem">
+        No such menu number exists.
+      </div>
+      <div ng-if="signupCtrl.saved">
+        Your information has been saved.
+      </div>
+    </form>
+  </fieldset>
+</div>
