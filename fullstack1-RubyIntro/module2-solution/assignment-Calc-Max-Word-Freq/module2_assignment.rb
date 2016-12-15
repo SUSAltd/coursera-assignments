@@ -22,6 +22,38 @@ class LineAnalyzer
   #  provided content and store that in the highest_wf_count attribute.
   #* identify the words that were used the maximum number of times and
   #  store that in the highest_wf_words attribute.
+
+
+  attr_reader :highest_wf_count, :highest_wf_words, :content, :line_number
+  
+  # initializes a LineAnalyzer object with given content string and line number to analyze
+  def initialize(content, line_number)
+    @highest_wf_count = 0
+    @highest_wf_words = []
+    @content = content
+    @line_number = line_number
+
+    calculate_word_frequency
+  end
+
+  def calculate_word_frequency()
+    @highest_wf_count = 0
+    @highest_wf_words = []
+    words = Hash.new(0)
+    content.split().each do |word|
+      word = word.downcase()
+      words[word] += 1
+      if (words[word] == @highest_wf_count)
+        # add word to array of highest words
+        @highest_wf_words.push(word)
+      elsif (words[word] > @highest_wf_count)
+        # empty the array and set this word as the new champion
+        @highest_wf_words = [word]
+        @highest_wf_count = words[word]
+      end
+    end
+
+  end
 end
 
 #  Implement a class called Solution. 
@@ -52,4 +84,45 @@ class Solution
 
   #Implement the print_highest_word_frequency_across_lines() method to
   #* print the values of objects in highest_count_words_across_lines in the specified format
+
+  attr_reader :analyzers, :highest_count_across_lines, :highest_count_words_across_lines
+
+  # initializes a Solution object
+  def initialize()
+    @analyzers = []
+  end
+
+  # This method takes a given filename and analyzes each line of the file's contents
+  def analyze_file(filename = "test.txt")
+    line_number = 1
+    File.foreach(filename) do |line|
+      analyzers.push(LineAnalyzer.new(line, line_number))
+      line_number += 1
+    end
+  end
+
+  # This method calculates the maximum value highest word count per line and stores
+  # an array of LineAnalyzers with said maximum value
+  def calculate_line_with_highest_frequency()
+    @highest_count_words_across_lines = []
+    @highest_count_across_lines = 0
+
+    @analyzers.each do |la|
+      if (la.highest_wf_count == @highest_count_across_lines)
+        @highest_count_words_across_lines.push(la)
+      elsif (la.highest_wf_count > @highest_count_across_lines)
+        @highest_count_across_lines = la.highest_wf_count
+        @highest_count_words_across_lines = [la]
+      end
+    end
+  end
+
+  # This method prints the maximum word frequencies across all lines of the given file
+  def print_highest_word_frequency_across_lines()
+    puts "The following words have the highest word frequency per line:"
+    @highest_count_words_across_lines.each do |la|
+      puts "#{la.highest_wf_words}, #{la.highest_wf_count} times (appears in line #{la.line_number})"
+    end
+  end
 end
+
